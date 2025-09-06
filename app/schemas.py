@@ -1,5 +1,6 @@
 from pydantic import BaseModel, EmailStr
 from typing import Optional
+from datetime import datetime
 
 
 # ===============================
@@ -22,6 +23,7 @@ class UserLogin(BaseModel):
 
 class User(UserBase):
     id: int
+    created_at: Optional[datetime] = None
 
     class Config:
         orm_mode = True
@@ -44,9 +46,9 @@ class StudentOut(BaseModel):
     id: int
     matric_no: str
     name: str
-    program: str
-    level: str
-    session: str
+    program: Optional[str] = None
+    level: Optional[str] = None
+    session: Optional[str] = None
 
     class Config:
         orm_mode = True
