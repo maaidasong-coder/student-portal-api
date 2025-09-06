@@ -4,7 +4,7 @@ from datetime import datetime, timedelta
 import jwt
 
 from app.database import get_db
-from app.schemas import UserCreate, UserLogin, Token, User
+from app.schemas import UserCreate, UserLogin, Token, User as UserSchema
 from app import crud
 from app.config import settings
 
@@ -21,7 +21,7 @@ def create_access_token(data: dict, expires_delta: timedelta | None = None):
     return jwt.encode(to_encode, settings.JWT_SECRET, algorithm=settings.JWT_ALGORITHM)
 
 
-@router.post("/register", response_model=User, status_code=status.HTTP_201_CREATED)
+@router.post("/register", response_model=UserSchema, status_code=status.HTTP_201_CREATED)
 def register(user: UserCreate, db: Session = Depends(get_db)):
     """Register a new user and return their details"""
     existing = crud.get_user_by_email(db, user.email)
