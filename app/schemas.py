@@ -1,18 +1,44 @@
 from pydantic import BaseModel, EmailStr
 from typing import Optional
 
-class UserCreate(BaseModel):
+
+# ===============================
+# USER SCHEMAS
+# ===============================
+
+class UserBase(BaseModel):
     email: EmailStr
-    password: str
     role: Optional[str] = "student"
+
+
+class UserCreate(UserBase):
+    password: str
+
 
 class UserLogin(BaseModel):
     email: EmailStr
     password: str
 
+
+class User(UserBase):
+    id: int
+
+    class Config:
+        orm_mode = True
+
+
+# ===============================
+# TOKEN SCHEMAS
+# ===============================
+
 class Token(BaseModel):
     access_token: str
     token_type: str = "bearer"
+
+
+# ===============================
+# STUDENT SCHEMAS
+# ===============================
 
 class StudentOut(BaseModel):
     id: int
