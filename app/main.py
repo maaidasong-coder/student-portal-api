@@ -6,14 +6,14 @@ from app.database import engine, Base
 # ===============================
 # DATABASE SETUP
 # ===============================
-# For development: auto-create tables (in production, use Alembic migrations)
+# Auto-create tables in development (use Alembic for production migrations)
 Base.metadata.create_all(bind=engine)
 
 # ===============================
 # APP INIT
 # ===============================
 app = FastAPI(
-    title="Student Portal API",
+    title="STC Student Portal API",
     version="1.0.0",
     description="Backend API for managing students, users, and authentication in the student portal."
 )
@@ -23,7 +23,7 @@ app = FastAPI(
 # ===============================
 origins = [
     "http://localhost:3000",  # local dev frontend
-    "https://your-frontend-app.vercel.app",  # replace with actual frontend domain
+    "https://your-frontend-app.vercel.app",  # replace with your deployed frontend
 ]
 
 app.add_middleware(
@@ -51,8 +51,8 @@ def health_check():
 # ===============================
 # ROUTES
 # ===============================
-# Auth routes with /auth prefix
+# Authentication endpoints
 app.include_router(auth.router, prefix="/auth", tags=["Authentication"])
 
-# Student routes with /students prefix
+# Student endpoints
 app.include_router(students.router, prefix="/students", tags=["Students"])
