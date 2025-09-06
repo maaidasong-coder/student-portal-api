@@ -13,7 +13,7 @@ def create_user(db: Session, user: UserCreate):
     hashed_pw = bcrypt.hash(user.password)
     db_user = models.User(
         email=user.email,
-        password_hash=hashed_pw,
+        password_hash=hashed_pw,  # updated to match your current models.py
         role=user.role
     )
     db.add(db_user)
@@ -33,7 +33,7 @@ def verify_password(plain: str, hashed: str) -> bool:
 
 
 # ===============================
-# STUDENT CRUD (optional, extend later)
+# STUDENT CRUD
 # ===============================
 
 def create_student(db: Session, user_id: int, matric_no: str, name: str, program: str, level: str, session: str):
